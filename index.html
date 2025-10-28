@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - My Digital Humble Abode</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to setup contact button behavior
+            function setupContactButton(btnId, menuId) {
+                const btn = document.getElementById(btnId);
+                const menu = document.getElementById(menuId);
+                let isOpen = false;
+
+                if (btn && menu) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        // Close any other open menus first
+                        document.querySelectorAll('.contact-menu.show').forEach(function(openMenu) {
+                            if (openMenu !== menu) {
+                                openMenu.classList.remove('show');
+                            }
+                        });
+                        
+                        isOpen = !isOpen;
+                        if (isOpen) {
+                            menu.classList.add('show');
+                        } else {
+                            menu.classList.remove('show');
+                        }
+                    });
+
+                    // Close this specific menu when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (isOpen && !menu.contains(e.target)) {
+                            menu.classList.remove('show');
+                            isOpen = false;
+                        }
+                    });
+                }
+            }
+
+            // Setup both contact buttons
+            setupContactButton('contactBtn', 'contactMenu');
+            setupContactButton('faqContactBtn', 'faqContactMenu');
+
+            // FAQ toggle behavior
+            (function setupFAQ() {
+                const questions = document.querySelectorAll('.faq-question');
+                questions.forEach(function(q, idx) {
+                    // ensure button is keyboard accessible and has aria attributes
+                    q.setAttribute('aria-expanded', 'false');
+
+                    // assign id to the answer element for aria-controls
+                    const answer = q.nextElementSibling;
+                    if (answer && answer.classList.contains('faq-answer')) {
+                        const aid = 'faq-answer-' + idx;
+                        answer.id = aid;
+                        q.setAttribute('aria-controls', aid);
+
+                        q.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            // close other open answers (single-open behavior)
+                            document.querySelectorAll('.faq-answer.open').forEach(function(openA) {
+                                if (openA !== answer) {
+                                    openA.classList.remove('open');
+                                    const btn = openA.previousElementSibling;
+                                    if (btn && btn.classList.contains('faq-question')) {
+                                        const icon = btn.querySelector('.faq-icon');
+                                        if (icon) icon.classList.remove('open');
+                                        btn.setAttribute('aria-expanded', 'false');
+                                    }
+                                }
+                            });
+
+                            // toggle this one
+                            const icon = q.querySelector('.faq-icon');
+                            const isOpen = answer.classList.toggle('open');
+                            if (icon) icon.classList.toggle('open', isOpen);
+                            q.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                        });
+                    }
+                });
+            })();
+        });
+    </script>
+</head>
+<body>
+    <!-- Background gradients -->
+    <div class="bg-gradient">
+        <div class="gradient-blob-1"></div>
+        <div class="gradient-blob-2"></div>
+        <div class="gradient-blob-3"></div>
+        <div class="gradient-blob-4"></div>
+    </div>
+
+    <!-- Shooting Stars -->
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-link active" data-section="home">Home</a>
+            <a href="#works" class="nav-link" data-section="works">Works</a>
+            <a href="#about" class="nav-link" data-section="about">About</a>
+            <a href="#faq" class="nav-link" data-section="faq">FAQ</a>
+        </div>
+    </nav>
+
+    <!-- Decorative stars -->
+    <div class="star" style="top: 15%; left: 15%;">
+        <svg class="star-sparkle" width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z"/>
+        </svg>
+    </div>
+    <div class="star" style="top: 25%; right: 12%;">
+        <div class="star-dot"></div>
+    </div>
+    <div class="star" style="top: 35%; left: 8%;">
+        <div class="star-plus">✧</div>
+    </div>
+    <div class="star" style="bottom: 30%; right: 15%;">
+        <svg class="star-sparkle" width="32" height="32" viewBox="0 0 32 32" fill="white">
+            <path d="M16 2L18 12L28 14L18 16L16 26L14 16L4 14L14 12L16 2Z"/>
+        </svg>
+    </div>
+    <div class="star" style="bottom: 45%; left: 10%;">
+        <div class="star-dot"></div>
+    </div>
+    <div class="star" style="top: 45%; right: 18%;">
+        <div class="star-plus">✦</div>
+    </div>
+    <div class="star" style="bottom: 20%; left: 20%;">
+        <div class="star-plus">✧</div>
+    </div>
+    <div class="star" style="top: 60%; right: 8%;">
+        <div class="star-plus">✦</div>
+    </div>
+    <!-- Additional stars -->
+    <div class="star" style="top: 8%; left: 30%;">
+        <div class="star-dot"></div>
+    </div>
+    <div class="star" style="top: 75%; right: 25%;">
+        <svg class="star-sparkle" width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z"/>
+        </svg>
+    </div>
+    <div class="star" style="top: 40%; left: 40%;">
+        <div class="star-plus">✧</div>
+    </div>
+    <div class="star" style="bottom: 15%; right: 35%;">
+        <div class="star-dot"></div>
+    </div>
+    <div class="star" style="top: 20%; right: 40%;">
+        <div class="star-plus">✦</div>
+    </div>
+    <div class="star" style="bottom: 60%; left: 25%;">
+        <svg class="star-sparkle" width="16" height="16" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z"/>
+        </svg>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home">
+        <div class="container">
+            <div>
+                <!-- Replace with your actual avatar image -->
+                <img src="21-removebg-preview.png" 
+                     alt="Profile Avatar" 
+                     class="profile-image " >
+            </div>
+                <div class="name">
+                    <h1>Junaid Ashraf</h1>
+                </div>
+            <div class="status-badge">
+                <span class="status-indicator"></span>
+                Available for opportunities
+            </div>
+
+            <h1>Welcome to<br>My digital humble World</h1>
+
+            <p class="subtitle">
+                Bridging Data, Web, and AI Automation to craft smart, efficient solutions.<br>
+                My interest lies in brand experience, and user experience.
+            </p>
+
+            <div class="button-group">
+                <div style="position: relative; display: inline-block;">
+                    <button class="btn btn-primary" id="contactBtn">
+                         Let's talk <img src="chat.png" alt="chat" height="25px">
+                    </button>
+                    <div class="contact-menu" id="contactMenu">
+                        <a href="mailto:junaidashraf2500@gmail.com" class="contact-item">
+                            ✉️ Email
+                        </a>
+                        <!-- WhatsApp link: use international format without '+' or parentheses -->
+                        <a href="https://wa.me/919755226200?text=Hi%20Junaid%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." target="_blank" class="contact-item">
+                            💬 WhatsApp
+                        </a>
+                        <a href="https://www.linkedin.com/in/junaid-ashraf-08992a288/" target="_blank" class="contact-item">
+                            <img src="icons8-linkedin-48.png" alt="LinkedIn"> LinkedIn
+                        </a>
+                    </div>
+                </div>
+                  
+                <button class="btn btn-secondary">
+                    Resume  <img src="icons8-resume-100.png" alt="" height="25px">
+                </button>
+                </a>
+
+                <a href="https://github.com/JunaidAshraf05">
+                <button class="btn btn-third">
+                    Github <img src="github-mark-white.png" height="25px" alt="">
+                </button>
+                </a>
+
+                <a href="https://www.linkedin.com/in/junaid-ashraf-08992a288/">
+                <button class="btn btn-fourth">
+                    LinkedIn <img src="icons8-linkedin-48.png" height="25px" alt="">
+                    
+                </button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section id="works">
+        <div class="container-lg">
+            <div class="section-header">
+                <h2>Selected Works</h2>
+                <p class="section-description">A showcase of my recent projects and collaborations</p>
+            </div>
+
+            <!-- Scrollable tabs (filters) -->
+            <!-- <div class="tabs-container container-lg">
+                <button class="tabs-scroll-btn" id="tabs-scroll-left" aria-label="Scroll left">‹</button>
+                <div class="tabs-wrapper">
+                    <div class="tabs" id="workTabs" role="tablist">
+                        <button class="tab active" data-filter="all" role="tab">All</button>
+                        <button class="tab" data-filter="Web" role="tab">Web</button>
+                        <button class="tab" data-filter="App" role="tab">App</button>
+                        <button class="tab" data-filter="Branding" role="tab">Branding</button>
+                        <button class="tab" data-filter="Creative" role="tab">Creative</button>
+                    </div>
+                    <div class="tabs-fade left" id="tabs-fade-left" style="opacity:0;"></div>
+                    <div class="tabs-fade right" id="tabs-fade-right" style="opacity:0;"></div>
+                </div>
+                <button class="tabs-scroll-btn" id="tabs-scroll-right" aria-label="Scroll right">›</button>
+            </div> -->
+
+            <div class="project-grid">
+                <div class="project-card">
+                    <img src="atw0c5jh.png" 
+                         alt="Text Encoder/Decoder (Tkinter GUI)" 
+                         class="project-image">
+                    <div class="project-content">
+                        <h3>🔐 Text Encoder/Decoder (Tkinter GUI)</h3>
+                            <p class="project-description">
+                                A Python-based GUI application for encoding and decoding text messages with secure features.
+                                <br><br>
+                                <span style="font-size: 1.1em; font-weight: 500; color: #22c55e;"> Features</span>
+                                <br><br>
+                                <span style="display: block; margin-bottom: 8px;">
+                                     <strong>User-Friendly GUI</strong> – Built with Tkinter, includes labels, text boxes, entry fields, and styled buttons
+                                </span>
+                                <span style="display: block; margin-bottom: 8px;">
+                                     <strong>Encode Messages</strong> – Converts plain text into Base64 encoded format
+                                </span>
+                                <span style="display: block; margin-bottom: 8px;">
+                                     <strong>Decode Messages</strong> – Restores encoded text back to the original form
+                                </span>
+                                <span style="display: block; margin-bottom: 8px;">
+                                     <strong>Password Protection</strong> – Requires a secret key (1234 by default) for both encryption and decryption
+                                </span>
+                                <span style="display: block; margin-bottom: 8px;">
+                                    <strong>Error Handling</strong> – Alerts users when the key is invalid or when decoding fails
+                                </span>
+                                <span style="display: block;">
+                                    <strong>Reset Option</strong> – Clears all fields for a fresh start
+                                </span>
+                            </p>
+                                           
+                            
+                        <a href="https://github.com/JunaidAshraf05/Encryption-Decryption">
+                            <button class="btn btn-fifth" >      
+                                View Project
+                            </button>
+                        </a>
+                        
+
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Security</span>
+                            <span class="tag">Software</span>
+                        </div>
+                    
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="1-Figure1-1.png" sizes="150px"
+                         alt="Virtual-mouse" 
+                         class="project-image">
+                    <div class="project-content">
+                        <!-- <div class="project-category">App Design</div> -->
+                        <h3>🖱️ Virtual Mouse</h3>
+                        <p class="project-description">
+                            Control your computer mouse using just your hand gestures — powered by Python, OpenCV, and MediaPipe.
+                            A fun and innovative project that brings AI, computer vision, and automation together.
+                            <br><br>
+                            <span style="font-size: 1.1em; font-weight: 500; color: #22c55e;"> Features</span>
+                            <br><br>
+                            <span style="display: block; margin-bottom: 8px;">
+                                 <strong>Real-time Hand Tracking</strong> – Built with MediaPipe for reliable hand keypoint detection
+                            </span>
+                            <span style="display: block; margin-bottom: 8px;">
+                                 <strong>Gesture-Based Control</strong> – Move, click, scroll and trigger actions using hand gestures
+                            </span>
+                            <span style="display: block; margin-bottom: 8px;">
+                                 <strong>Smooth Movements</strong> – Filtering and smoothing for responsive, low-latency cursor control
+                            </span>
+                            <span style="display: block; margin-bottom: 8px;">
+                                 <strong>AI + CV</strong> – Combines computer vision and lightweight automation logic
+                            </span>
+                            <span style="display: block;">
+                                 <strong>Works with Webcam</strong> – Runs on any standard webcam; minimal setup required
+                            </span>
+                        </p>
+                        
+                        <a href="https://github.com/JunaidAshraf05/Virtual-Mouse" class="project-view-button">View Project</a>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">Gesture Control</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="stock-1863880_640.jpg" 
+                         alt="Data Analysis " 
+                         class="project-image">
+                    <div class="project-content">
+                        <!-- <div class="project-category">Branding</div> -->
+                        <h3>Data Analysis</h3>
+                        <h4>1.Weather Data Analysis 🌦️
+                        </h4>
+                        <p class="project-description">
+                        This project performs an exploratory data analysis (EDA) on a weather dataset using Python, providing insights into temperature trends, wind speed patterns, and other key meteorological variables. It serves as a beginner-friendly example of how to analyze and visualize time-series weather data using the pandas, matplotlib, and seaborn libraries.</p>
+                         <h5>2. 🎵 Spotify Listening Stats Visualizer
+
+                        </h5>
+                         <p class="project-description">A Python project to analyze and visualize your Spotify listening data using Pandas, Seaborn, and Matplotlib in Jupyter Notebooks..</p>
+                        <a href="https://github.com/JunaidAshraf05/Data-Analysis-Weather-Dataset-" class="project-view-button">View Project 1</a>
+                        <a href="https://github.com/JunaidAshraf05/Data-Analytic-Project?tab=readme-ov-file#data-analytic-project" class="project-view-button">View Project 2</a>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Jupyter Notebook</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">Numpy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="Screenshot 2025-10-28 130909.png" 
+                         alt="Creative Portfolio" 
+                         class="project-image">
+                    <div class="project-content">
+                        <div class="project-category">Web Design</div>
+                        <h3>🗂️ Project Manager Dashboard(In-progress)</h3>
+
+                        <p class="project-description">The Project Manager Dashboard is a modern, interactive web application built with React, Vite, and Tailwind CSS that helps teams efficiently track, organize, and manage projects. Designed with a clean and intuitive interface, it allows users to visualize workflows, monitor progress, and collaborate 
+                         <br><br>
+                        This app takes inspiration from a Figma UI design and transforms it into a fully functional React application, demonstrating strong skills in component-based development, UI frameworks (Radix UI), and state management.</p>
+                        <a href="#" class="project-view-button">View Project</a>
+                        <div class="project-tags">
+                            <span class="tag">Web</span>
+                            <span class="tag">Css</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">React</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container-md">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>
+                       Hi! I’m a Web Developer and Data Enthusiast passionate about building impactful, data-driven solutions. I have a strong foundation in Python, with expertise in libraries like Pandas, NumPy, and Matplotlib for data analysis and visualization.
+                    </p>
+                    <p>
+                       Alongside analytics, I design and develop responsive websites using HTML, CSS, and JavaScript. I’m currently learning React.js, C++ with DSA, and AI Automation to expand my skills across both development and intelligent automation systems.
+                    </p>
+                    <p>
+                        I’m always eager to learn, experiment with new technologies, and contribute to projects that blend analytics, automation, and web innovation.
+                    </p>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-dot"></div>
+                            <span>Brand Identity & Strategy</span>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-dot"></div>
+                            <span>User Experience Design</span>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-dot"></div>
+                            <span>Web & App Development</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-card">
+                    <h3>Data Analysis Intern at Cognifyz Technologies</h3>
+                    <div class="experience-item">
+                        <div class="experience-date">1-Oct-2025 to 1-Nov-2025</div>
+                        <div class="experience-title">Data Analysis</div>
+                        <div class="experience-company">Intern</div>
+                    </div>
+                    <!-- <div class="experience-item">
+                        <div class="experience-date">2018 - 2020</div>
+                        <div class="experience-title">Senior UX Designer</div>
+                        <div class="experience-company">Creative Agency</div>
+                    </div> -->
+                    <!-- <div class="experience-item">
+                        <div class="experience-date">2016 - 2018</div>
+                        <div class="experience-title">Product Designer</div>
+                        <div class="experience-company">Tech Startup</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container-sm">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p class="section-description">Everything you need to know about working with me</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What services do you offer?</span>
+                        <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            I specialize in brand experience design, user experience design, and web design. My services include branding, UI/UX design, web development, and design consultation.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How long does a typical project take?</span>
+                        <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Project timelines vary depending on scope and complexity. A typical branding project takes 4-6 weeks, while a web design project can take 6-12 weeks. We'll discuss specific timelines during our initial consultation.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What is your design process?</span>
+                        <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            My process includes discovery & research, concept development, design iteration, and final delivery. I believe in close collaboration and regular feedback throughout the project.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do you work with international clients?</span>
+                        <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! I work with clients globally and am experienced in remote collaboration. I'm comfortable working across different time zones and use various tools to ensure smooth communication.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What are your rates?</span>
+                        <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            My rates vary based on project scope, timeline, and complexity. I offer both project-based and hourly rates. Let's discuss your specific needs to provide an accurate quote.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-cta">
+                <p>Still have questions?</p>
+                <div style="position: relative; display: inline-block;">
+                    <button class="btn btn-primary" id="faqContactBtn">Get in touch</button>
+                    <div class="contact-menu" id="faqContactMenu">
+                        <a href="mailto:junaidashraf2500@gmail.com" class="contact-item">
+                            ✉️ Email
+                        </a>
+                        <a href="https://wa.me/919755226200?text=Hi%20Junaid%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." target="_blank" class="contact-item">
+                            💬 WhatsApp
+                        </a>
+                        <a href="https://www.linkedin.com/in/junaid-ashraf-08992a288/" target="_blank" class="contact-item">
+                            <img src="icons8-linkedin-48.png" alt="LinkedIn"> LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-copyright">© 2025 All rights reserved</div>
+            <div class="footer-links">
+                <a href="#">Twitter</a>
+                <a href="https://www.linkedin.com/in/junaid-ashraf-08992a288/">LinkedIn</a>
+                <!-- <a href="#">Instagram</a>
+                <a href="#">Dribbble</a> -->
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>
